@@ -1,41 +1,74 @@
-import React from "react"
-import { ViewButton, ViewPanel } from "@tolokoban/ui"
-import { makeGoto } from "./routes"
+import { ViewPanel } from "@tolokoban/ui";
+
+import automneURL from "@/gfx/automne.webp";
+import automne2URL from "@/gfx/automne2.webp";
+import agatheURL from "@/gfx/agathe.webp";
+import agathe2URL from "@/gfx/agathe2.webp";
+import agathe3URL from "@/gfx/agathe3.webp";
+import agathe4URL from "@/gfx/agathe4.webp";
+import agathe5URL from "@/gfx/agathe5.webp";
+import fabienURL from "@/gfx/fabien.webp";
+import geraldineURL from "@/gfx/geraldine.webp";
+import hortyURL from "@/gfx/horty.webp";
+import julietteURL from "@/gfx/juliette.webp";
+import karineURL from "@/gfx/karine.webp";
+import louiseURL from "@/gfx/louise.webp";
+import manuelURL from "@/gfx/manuel.webp";
+import paulineURL from "@/gfx/pauline.webp";
+import tiphaineURL from "@/gfx/tiphaine.webp";
+
+import styles from "./page.module.css";
+
+const images = shuffle([
+    automneURL,
+    automne2URL,
+    // agatheURL,
+    agathe2URL,
+    agathe3URL,
+    agathe4URL,
+    agathe5URL,
+    fabienURL,
+    geraldineURL,
+    hortyURL,
+    julietteURL,
+    karineURL,
+    louiseURL,
+    manuelURL,
+    paulineURL,
+    tiphaineURL,
+]);
 
 export default function Page() {
-    const [list, setList] = React.useState(["One", "Two", "Three"])
-    const handleAdd = () => {
-        setList((prev) => [...prev, `Item#${ID++}`])
-    }
-
     return (
         <ViewPanel
-            display="flex"
-            flexDirection="column"
-            alignItems="stretch"
-            gap="L"
+            className={styles.page}
             fullsize
             position="absolute"
-            fontSize="1em"
         >
-            <ViewButton onClick={handleAdd}>
-                Add new item to the list
-            </ViewButton>
-            {list.map((v) => (
-                <Item key={v} value={v} />
-            ))}
-            <ViewButton onClick={handleAdd}>
-                Add new item to the list
-            </ViewButton>
+            <ViewPanel
+            className={styles.reveal}
+                fullsize
+                position="absolute"
+                display="flex"
+                flexDirection="row"
+                justifyContent="center"
+                alignItems="center"
+                flexWrap="wrap"
+                gap="M"
+                overflow="auto"
+            >
+                {images.map((url) => (
+                    <img className={styles.image} src={url} key={url} />
+                ))}
+            </ViewPanel>
         </ViewPanel>
-    )
+    );
 }
 
-let ID = 0
-
-const Item = React.memo(RawItem)
-
-function RawItem({ value }: { value: string }) {
-    const color = `hsl(${Math.floor(Math.random() * 360)} 100% 50%)`
-    return <div style={{ background: color, color: "#000" }}>{value}</div>
+function shuffle(arr: string[]): string[] {
+    for (let i = 0; i < arr.length; i++) {
+        const j = Math.floor(Math.random() * arr.length);
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
 }
